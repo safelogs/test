@@ -9,6 +9,7 @@ participant "Hotfix branch" as hotbranch order 40 #DarkSalmon
 
 {startrc} devbranch -> rcbranch ++ #YellowGreen: Create branch release/x.y.0
 
+title DEV STUFF!
 
 note left of devbranch
   Evolutions
