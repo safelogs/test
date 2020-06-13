@@ -36,4 +36,4 @@ jobs:
           commit_user_email: "noreply@defectdojo.org"
           commit_author: "PlantUML Bot <noreply@defectdojo.org>"
           commit_message: "Generate SVG and PNG images for PlantUML diagrams"
-          branch: ${{ github.head_ref }}
+          # branch: ${{ github.head_ref }}
