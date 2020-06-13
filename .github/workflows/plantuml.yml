@@ -1,5 +1,6 @@
 name: Generate PlantUML Diagrams
 on:
+  pull_request:
   push:
     paths:
       - '**.puml'
@@ -14,6 +15,8 @@ jobs:
     steps:
       - name: Checkout Source
         uses: actions/checkout@v1
+        with:
+          ref: ${{ github.head_ref }}
       - name: Get changed UML files
         id: getfile
         run: |
