@@ -30,10 +30,10 @@ jobs:
         with:
           args: -v -tpng ${{ steps.getfile.outputs.files }}
       - name: Push Local Changes
-        uses: stefanzweifel/git-auto-commit-action@v4.1.2
+        uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_user_name: "PlantUML_bot"
           commit_user_email: "noreply@defectdojo.org"
           commit_author: "PlantUML Bot <noreply@defectdojo.org>"
           commit_message: "Generate SVG and PNG images for PlantUML diagrams"
-          branch: ${{ github.head_ref }}
+          # branch: ${{ github.head_ref }}
