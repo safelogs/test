@@ -41,7 +41,14 @@ jobs:
         with:
           args: -v -tpng ${{ steps.getfile.outputs.files }}
       - name: Push Local Changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: "[action] Generate SVG and PNG images for PlantUML diagrams"
+        #  uses: stefanzweifel/git-auto-commit-action@v4
+        #with:
+        #  commit_message: "[action] Generate SVG and PNG images for PlantUML diagrams"
           # branch: ${{ github.head_ref }}
+        run: |
+          git config --global user.name 'plantbot'
+          git config --global user.email 'plantbot@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+          git checkout "${GITHUB_REF:11}"
+          git commit -am "[action] plantUML generation"
+          git push
