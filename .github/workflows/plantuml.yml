@@ -13,27 +13,33 @@ jobs:
     env:
       UML_FILES: ".puml"
     steps:
-      - name: Checkout Source
+      - if github.event_name == 'pull_request'
+        name: Checkout Source
         uses: actions/checkout@v1
         with:
           ref: ${{ github.head_ref }}
-      - name: reattach HEAD to Head Ref
-        run: git checkout "$(echo ${{ github.head_ref }} | sed -E 's|refs/[a-zA-Z]+/||')"
-        if: github.head_ref != ''
-      - name: reattach HEAD to Ref
-        run: git checkout "$(echo ${{ github.ref }} | sed -E 's|refs/[a-zA-Z]+/||')"
-        if: github.head_ref == ''
+      - if github.event_name == 'push'
+        name: Checkout Source
+        uses: actions/checkout@v1
+        with:
+          ref: ${{ github.ref }}
+      # - name: reattach HEAD to Head Ref
+        # run: git checkout "$(echo ${{ github.head_ref }} | sed -E 's|refs/[a-zA-Z]+/||')"
+        # if: github.head_ref != ''
+      # - name: reattach HEAD to Ref
+        # run: git checkout "$(echo ${{ github.ref }} | sed -E 's|refs/[a-zA-Z]+/||')"
+        # if: github.head_ref == ''
         # with:
         #   ref: ${{ github.head_ref }}
       - name: Get changed UML files
         id: getfile
         run: |
-          echo "with diff-tree sha"
-          echo "::set-output name=files::$(git diff-tree -r --no-commit-id --name-only ${{ github.sha }} | grep ${{ env.UML_FILES }} | xargs)"
+          # echo "with diff-tree sha"
+          # echo "::set-output name=files::$(git diff-tree -r --no-commit-id --name-only ${{ github.sha }} | grep ${{ env.UML_FILES }} | xargs)"
           echo "with diff-index sha"
           echo "::set-output name=files::$(git diff-index --name-only ${{ github.sha }} | grep ${{ env.UML_FILES }} | xargs)"
-          echo "with diff-index basic"
-          echo "::set-output name=files::$(git diff-index --name-only HEAD | grep ${{ env.UML_FILES }} | xargs)"
+          # echo "with diff-index basic"
+          # echo "::set-output name=files::$(git diff-index --name-only HEAD | grep ${{ env.UML_FILES }} | xargs)"
       - name: UML files considered echo output
         run: |
           echo ${{ steps.getfile.outputs.files }}
