@@ -13,12 +13,12 @@ jobs:
     env:
       UML_FILES: ".puml"
     steps:
-      - if github.event_name == 'pull_request'
+      - if: github.event_name == 'pull_request'
         name: Checkout Source
         uses: actions/checkout@v1
         with:
           ref: ${{ github.head_ref }}
-      - if github.event_name == 'push'
+      - if: github.event_name == 'push'
         name: Checkout Source
         uses: actions/checkout@v1
         with:
